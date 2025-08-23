@@ -1,0 +1,140 @@
+/* Main styling */
+.eng {
+  display: none;
+}
+html,
+body {
+  overflow-x: hidden;
+}
+body {
+  background-color: rgb(50, 50, 50);
+  /* background-image: conic-gradient(at 50% 0%, #000, #333, #000); */
+  color: white;
+  margin: 0;
+  font-family: "Lato", sans-serif;
+  font-weight: 300;
+}
+main {
+  width: 1024px;
+  margin: auto;
+}
+a {
+  text-decoration: none;
+  color: white;
+}
+.half {
+  width: 512px;
+  margin: auto;
+}
+.background {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+#header {
+  width: 100%;
+  height: 250px;
+  /* additionals css in other files */
+}
+#languages {
+  position: absolute;
+  top: 20px;
+  right: 40px;
+  cursor: pointer;
+}
+#cz {
+  font-weight: bold;
+}
+#footer {
+  height: fit-content;
+  width: 100%;
+  background-color: rgb(40, 40, 40);
+  text-align: center;
+  padding-bottom: 20px;
+  padding-top: 20px;
+  font-weight: 100;
+  bottom: 0;
+  position: sticky;
+  float: left;
+  margin-top: 1em;
+}
+h1 {
+  text-align: center;
+  letter-spacing: 30px;
+  font-weight: normal;
+  margin-top: 1em;
+}
+h2 {
+  text-align: center;
+  font-weight: lighter;
+  letter-spacing: 10px;
+}
+p {
+  margin-bottom: 30px;
+}
+#phone_header {
+  display: none;
+  width: 100%;
+  height: 50px;
+  position: fixed;
+  background-color: rgb(20, 20, 20);
+  top: 0;
+  z-index: 3;
+}
+#phone_header a {
+  font-family: "Lato", sans-serif;
+  font-weight: 400;
+}
+.∅ {
+  font-weight: 900;
+}
+#logo {
+  position: absolute;
+  font-weight: 300;
+  font-size: 20px;
+  top: 10px;
+  left: 43%; /* 20px; */
+  cursor: pointer;
+}
+#phone_menu {
+  width: 30px;
+  height: 30px;
+  position: absolute;
+  right: 25px;
+  top: 12px;
+  cursor: pointer;
+}
+.stripe {
+  background-color: white;
+  width: 100%;
+  height: 5px;
+  margin-bottom: 5px;
+}
+#close_menu {
+  font-size: 60px;
+  font-weight: bold;
+  position: fixed;
+  right: 20px;
+  top: -15px;
+  display: none;
+  z-index: 3;
+}
+
+/* Phone css */
+@media only screen and (max-width: 1024px) {
+  main {
+    width: auto;
+  }
+  .half {
+    width: 100%;
+  }
+  #phone_header {
+    display: block;
+  }
+  #header {
+    height: 50px;
+  }
+  #languages {
+    left: 20px;
+    top: 15px;
+    z-index: 4;
+  }
+}

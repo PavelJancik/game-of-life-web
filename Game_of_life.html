@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="">
+  <head>
+    <meta charset="utf-8" />
+    <title>Game of Ant</title>
+    <script type="text/javascript" src="./js/game_of_life.js"></script>
+    <script type="text/javascript" src="./js/ant.js"></script>
+    <script type="text/javascript" src="./js/translation.js"></script>
+    <link rel="stylesheet" href="./css/game_of_life.css" />
+    <link rel="stylesheet" href="./css/main.css" />
+  </head>
+  <body onload="init()">
+    <!-- phone alert -->
+    <div id="phone_alert">
+      <span class="cz"
+        >Tato stránka není optimalizována pro mobilní zařízení</span
+      >
+      <span class="eng">This page is not optimized for mobile phones</span>
+      <button onclick="hide_alert()">
+        <span class="cz">Pokračovat</span>
+        <span class="eng">Continue</span>
+      </button>
+    </div>
+
+    <!-- header -->
+    <div id="header"><div id="header_text">Game of Ant</div></div>
+    <div id="languages" onclick="switch_languages()">
+      <span id="cz">cz</span> |
+      <span id="eng">eng</span>
+    </div>
+
+    <main>
+      <!-- control panel -->
+      <div id="control_panel">
+        <div id="ant_buttons">
+          <h2>
+            <span class="eng">Ant</span>
+            <span class="cz">Mravenec</span>
+          </h2>
+          <button id="add_ant" class="button" onclick="add_ant()">
+            <span class="eng">Add Ant</span>
+            <span class="cz">Přidat</span>
+          </button>
+          <button id="move_ant" onclick="move_ant()">
+            <span class="eng">Move Ant</span>
+            <span class="cz">Krok vpřed</span>
+          </button>
+          <button id="start_ant" onclick="start_ant()">
+            <span class="eng">Start Ant</span>
+            <span class="cz">Spustit</span>
+          </button>
+          <button id="pause_ant" onclick="pause_ant()">
+            <span class="eng">Pause Ant</span>
+            <span class="cz">Pozastavit</span>
+          </button>
+        </div>
+        <div id="gol_buttons">
+          <h2>
+            <span class="eng">Game of Life</span>
+            <span class="cz">Hra života</span>
+          </h2>
+          <button id="start_gol" onclick="start()">
+            <span class="eng">Start</span>
+            <span class="cz">Spustit</span>
+          </button>
+          <button id="pause_gol" onclick="pause()">
+            <span class="eng">Pause</span>
+            <span class="cz">Pozastavit</span>
+          </button>
+          <button id="stop_gol" onclick="stop()">
+            <span class="eng">Stop</span>
+            <span class="cz">Zastavit</span>
+          </button>
+          <button id="next_gen" onclick="next_gen()">
+            <span class="eng">Next gen</span>
+            <span class="cz">Další generace</span>
+          </button>
+          <button id="reset_grid" onclick="reset_grid()">
+            <span class="eng">Reset</span>
+            <span class="cz">Obnvovit</span>
+          </button>
+          <button id="init_default" onclick="init_default()">
+            <span class="eng">Example</span>
+            <span class="cz">Příklad</span>
+          </button>
+        </div>
+        <div id="shared_ui">
+          <h2>
+            <span class="eng">Shared UI</span>
+            <span class="cz">Rozhraní</span>
+          </h2>
+          <input
+            id="speed"
+            type="range"
+            min="100"
+            max="500"
+            value="50"
+            onmousemove="change_speed(value)"
+            onclick="change_speed(value)"
+            step="50"
+          />
+          <span id="speed_display">
+            <span class="eng">Speed</span>
+            <span class="cz">Rychlost</span>
+          </span>
+          <br />
+          <span class="eng">Generation:</span>
+          <span class="cz">Generace:</span>
+          <span id="generation"></span>
+          <br />
+          <span class="eng">Ant:</span>
+          <span class="cz">Mravenec:</span>
+          <span id="ant_counter"></span>
+        </div>
+      </div>
+
+      <!-- grid -->
+      <div id="grid"></div>
+
+      <!-- about -->
+      <h2>
+        <span class="eng">Game of Life</span>
+        <span class="cz">Hra života</span>
+      </h2>
+      <p>
+        <span class="cz">
+          Hra života (Game of Life) vznikla v roce 1970 a vymyslel ji britský
+          matematik John Horton Conway. Hra je Turingovsky úplná, a lze v ní tak
+          například sestavit teoretický model počítače založený na Von
+          Neumannově koncepci. Pravidla hry jsou jednoduchá. Hrací pole se
+          skládá z mřížky čtvercových buňek a je nekonečně velké. Každá buňka má
+          právě 8 sousedù a mùže se nacházet v jednom ze dvou stavù - je buď
+          mrtvá nebo živá. Tyto stavy se mohou měnit.
+          <br /><br />
+          - Pokud má živá buňka 2 nebo 3 živé sousedy, zùstane žít, jinak zemře.
+          <br />
+          - Pokud má mrtvá buňka právě 3 živé sousedy, oživne.
+          <br /><br />
+          Stav všech buněk se mění současntně. Hráč udává pouze počáteční
+          nastavení, zbytek hry se odehrává sám - proto je tato hra nazývana
+          také jako "zero-player game" (hra bez hráčù).
+        </span>
+        <span class="eng">
+          Game of life was created in 1970 by John Horton Conway. Rules are
+          quite simple. There is an infinite grid. Each cell has 8 neightbours
+          and can be in one of two possible states: dead or alive. These states
+          changes acording following rules:
+          <br /><br />
+          - If the cell is alive and has 2 or 3 alive neightbours, the cell will
+          life to next generation. Otherwise it dies.
+          <br />
+          - If the cell is dead and has exactly 3 alive neightbours, the cell
+          will revive.
+          <br /><br />
+          The state of all cells changes at the same time. Player sets just
+          initial state, the rest of the game play itselfs. Because of that we
+          can call this game "zero-player game".
+        </span>
+      </p>
+
+      <h2>
+        <span class="eng">Langton's Ant</span>
+        <span class="cz">Langtonův mravenec</span>
+      </h2>
+      <p>
+        <span class="cz">
+          Mravenec Chrise Langtona (Langton's Ant) vznikl o 16 let pozdìji než
+          Hra života. Hrací pole je stejné. Políčko však tentokrát změní stav ve
+          chvíli, kdy ho mravenec opustí.
+          <br /><br />
+          - Pokud je pùvodní stav políčka 'naživu', přejde mravenec na políčko
+          které je po jeho levici.
+          <br />
+          - Pokud je políčko mrtvé, přejde na políčko po jeho pravici.
+          <br /><br />
+          Po několika tisících cyklech tento mravec začne vytvářet pravidelné
+          útvary zvané dálnice.
+        </span>
+        <span class="eng">
+          Chris Langton's Ant was created 16 years later than Game of Life. The
+          grid is same, but the cell changes states in the moment, when ant
+          leaves it.
+          <br /><br />
+          - If the cell is alive, the ant goes to the left cell.
+          <br />
+          - If the cell is dead, the ant goes to the right one.
+          <br /><br />
+          After thousend of cycles, the ant starts to create highways.
+        </span>
+      </p>
+
+      <h2>
+        <span class="eng">About this Game</span>
+        <span class="cz">O této hře</span>
+      </h2>
+      <p>
+        <span class="cz">
+          Tato hra kombinuje Hru života a Langtonova mravence. Oproti pùvodní
+          Hře života, se tato verze liší konečností hracího pole, která je
+          omezena. Hranice mají podmínku periodického opakování, tudíž se
+          některé vzory chovájí jinak než v pùvodní verzi hry. Vzhledem k malému
+          rozlišení zde mravenec nedojde ke stavu kdy vytváří tzv. dálnice.
+          Nicméně je možné ho použít k vytvoření iniciativního stavu pro Hru
+          života.
+        </span>
+        <span class="eng">
+          This game combine Game of Life and Langton's Ant. This game differs in
+          grid size, as it is not infinite, some patterns behave other way than
+          in original game. Due to small resolution of the grid, the ant will
+          not come to the state, where he can create highways. However you can
+          use him to create initial state for Game of Life.
+        </span>
+      </p>
+    </main>
+
+    <!-- footer -->
+    <div id="footer">
+      <span class="cz">Webové stránky vytvořil Pavel Jančík</span>
+      <span class="eng">Website created by Pavel Jančík</span>
+    </div>
+
+    <script type="text/javascript" src="../js/const.js"></script>
+  </body>
+</html>
